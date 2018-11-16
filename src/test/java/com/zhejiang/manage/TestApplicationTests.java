@@ -1,4 +1,4 @@
-package com.jcy.test;
+package com.zhejiang.manage;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

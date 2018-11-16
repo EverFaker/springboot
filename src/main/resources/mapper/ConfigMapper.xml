@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhejiang.manage.mapper.ConfigMapper" >
+  <resultMap id="BaseResultMap" type="com.zhejiang.manage.model.Config" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="value" property="value" jdbcType="VARCHAR" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.type != null" >
+         and type = #{condition.type}
+      </if>
+      <if test="condition.value != null" >
+         and value = #{condition.value}
+      </if>
+      <if test="condition.attr1 != null" >
+         and attr1 = #{condition.attr1}
+      </if>
+      <if test="condition.attr2 != null" >
+         and attr2 = #{condition.attr2}
+      </if>
+      <if test="condition.attr3 != null" >
+         and attr3 = #{condition.attr3}
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, type, value, attr1, attr2, attr3
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.zhejiang.manage.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from config
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from config
+    where id = #{id}
+  </delete>
+  <delete id="deleteByParams" parameterType="com.zhejiang.manage.model.Criteria" >
+    delete from config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhejiang.manage.model.Config" >
+    insert into config (id, type, value, attr1, attr2, attr3)
+    values (#{id}, #{type}, #{value}, #{attr1}, #{attr2}, #{attr3})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhejiang.manage.model.Config" >
+    insert into config
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="value != null" >
+        value,
+      </if>
+      <if test="attr1 != null" >
+        attr1,
+      </if>
+      <if test="attr2 != null" >
+        attr2,
+      </if>
+      <if test="attr3 != null" >
+        attr3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="value != null" >
+        #{value},
+      </if>
+      <if test="attr1 != null" >
+        #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        #{attr3},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByParams" parameterType="com.zhejiang.manage.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from config
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByParamsSelective" parameterType="map" >
+    update config
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type},
+      </if>
+      <if test="record.value != null" >
+        value = #{record.value},
+      </if>
+      <if test="record.attr1 != null" >
+        attr1 = #{record.attr1},
+      </if>
+      <if test="record.attr2 != null" >
+        attr2 = #{record.attr2},
+      </if>
+      <if test="record.attr3 != null" >
+        attr3 = #{record.attr3},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByParams" parameterType="map" >
+    update config
+    set id = #{record.id},
+      type = #{record.type},
+      value = #{record.value},
+      attr1 = #{record.attr1},
+      attr2 = #{record.attr2},
+      attr3 = #{record.attr3}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhejiang.manage.model.Config" >
+    update config
+    <set >
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="value != null" >
+        value = #{value},
+      </if>
+      <if test="attr1 != null" >
+        attr1 = #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        attr2 = #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        attr3 = #{attr3},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhejiang.manage.model.Config" >
+    update config
+    set type = #{type},
+      value = #{value},
+      attr1 = #{attr1},
+      attr2 = #{attr2},
+      attr3 = #{attr3}
+    where id = #{id}
+  </update>
+</mapper>

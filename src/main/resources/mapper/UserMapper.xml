@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhejiang.manage.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zhejiang.manage.model.User" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="last_login" property="lastLogin" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.username != null" >
+         and username = #{condition.username}
+      </if>
+      <if test="condition.uname != null" >
+        and username like #{condition.uname}
+      </if>
+
+      <if test="condition.password != null" >
+         and password = #{condition.password}
+      </if>
+      <if test="condition.phone != null" >
+         and phone = #{condition.phone}
+      </if>
+      <if test="condition.email != null" >
+         and email = #{condition.email}
+      </if>
+      <if test="condition.lastLogin != null" >
+         and last_login = #{condition.lastLogin}
+      </if>
+      <if test="condition.type != null" >
+         and type = #{condition.type}
+      </if>
+      <if test="condition.attr1 != null" >
+         and attr1 = #{condition.attr1}
+      </if>
+      <if test="condition.attr2 != null" >
+         and attr2 = #{condition.attr2}
+      </if>
+      <if test="condition.attr3 != null" >
+         and attr3 = #{condition.attr3}
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, username, password, phone, email, last_login, type, attr1, attr2, attr3
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.zhejiang.manage.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where id = #{id}
+  </delete>
+  <delete id="deleteByParams" parameterType="com.zhejiang.manage.model.Criteria" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhejiang.manage.model.User" >
+    insert into user (id, username, password, phone, email, last_login, type, 
+      attr1, attr2, attr3)
+    values (#{id}, #{username}, #{password}, #{phone}, #{email}, #{lastLogin}, #{type}, 
+      #{attr1}, #{attr2}, #{attr3})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhejiang.manage.model.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="lastLogin != null" >
+        last_login,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="attr1 != null" >
+        attr1,
+      </if>
+      <if test="attr2 != null" >
+        attr2,
+      </if>
+      <if test="attr3 != null" >
+        attr3,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="username != null" >
+        #{username},
+      </if>
+      <if test="password != null" >
+        #{password},
+      </if>
+      <if test="phone != null" >
+        #{phone},
+      </if>
+      <if test="email != null" >
+        #{email},
+      </if>
+      <if test="lastLogin != null" >
+        #{lastLogin},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="attr1 != null" >
+        #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        #{attr3},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByParams" parameterType="com.zhejiang.manage.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByParamsSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.username != null" >
+        username = #{record.username},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email},
+      </if>
+      <if test="record.lastLogin != null" >
+        last_login = #{record.lastLogin},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type},
+      </if>
+      <if test="record.attr1 != null" >
+        attr1 = #{record.attr1},
+      </if>
+      <if test="record.attr2 != null" >
+        attr2 = #{record.attr2},
+      </if>
+      <if test="record.attr3 != null" >
+        attr3 = #{record.attr3},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByParams" parameterType="map" >
+    update user
+    set id = #{record.id},
+      username = #{record.username},
+      password = #{record.password},
+      phone = #{record.phone},
+      email = #{record.email},
+      last_login = #{record.lastLogin},
+      type = #{record.type},
+      attr1 = #{record.attr1},
+      attr2 = #{record.attr2},
+      attr3 = #{record.attr3}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhejiang.manage.model.User" >
+    update user
+    <set >
+      <if test="username != null" >
+        username = #{username},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="email != null" >
+        email = #{email},
+      </if>
+      <if test="lastLogin != null" >
+        last_login = #{lastLogin},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="attr1 != null" >
+        attr1 = #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        attr2 = #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        attr3 = #{attr3},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhejiang.manage.model.User" >
+    update user
+    set username = #{username},
+      password = #{password},
+      phone = #{phone},
+      email = #{email},
+      last_login = #{lastLogin},
+      type = #{type},
+      attr1 = #{attr1},
+      attr2 = #{attr2},
+      attr3 = #{attr3}
+    where id = #{id}
+  </update>
+</mapper>

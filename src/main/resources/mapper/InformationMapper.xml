@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhejiang.manage.mapper.InformationMapper" >
+  <resultMap id="BaseResultMap" type="com.zhejiang.manage.model.Information" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="company" property="company" jdbcType="VARCHAR" />
+    <result column="conn_user" property="connUser" jdbcType="VARCHAR" />
+    <result column="conn_phone" property="connPhone" jdbcType="VARCHAR" />
+    <result column="b_type" property="bType" jdbcType="VARCHAR" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="file_name" property="fileName" jdbcType="VARCHAR" />
+    <result column="draft" property="draft" jdbcType="VARCHAR" />
+    <result column="draft_time" property="draftTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="attr1" property="attr1" jdbcType="VARCHAR" />
+    <result column="attr2" property="attr2" jdbcType="VARCHAR" />
+    <result column="attr3" property="attr3" jdbcType="VARCHAR" />
+    <result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <trim prefix="where" prefixOverrides="and|or" >
+      <if test="condition.title != null" >
+         and title like #{condition.title}
+      </if>
+      <if test="condition.company != null" >
+         and company = #{condition.company}
+      </if>
+      <if test="condition.connUser != null" >
+         and conn_user = #{condition.connUser}
+      </if>
+      <if test="condition.connPhone != null" >
+         and conn_phone = #{condition.connPhone}
+      </if>
+      <if test="condition.bType != null" >
+         and b_type = #{condition.bType}
+      </if>
+      <if test="condition.type != null" >
+         and type = #{condition.type}
+      </if>
+      <if test="condition.fileName != null" >
+         and file_name = #{condition.fileName}
+      </if>
+      <if test="condition.draft != null" >
+         and draft = #{condition.draft}
+      </if>
+      <if test="condition.draftTime != null" >
+         and draft_time = #{condition.draftTime}
+      </if>
+      <if test="condition.updateTime != null" >
+         and update_time = #{condition.updateTime}
+      </if>
+      <if test="condition.attr1 != null" >
+         and attr1 = #{condition.attr1}
+      </if>
+      <if test="condition.attr2 != null" >
+         and attr2 = #{condition.attr2}
+      </if>
+      <if test="condition.attr3 != null" >
+         and attr3 = #{condition.attr3}
+      </if>
+      <if test="condition.fileUrl != null" >
+         and file_url = #{condition.fileUrl}
+      </if>
+    </trim>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, title, company, conn_user, conn_phone, b_type, type, file_name, draft, draft_time, 
+    update_time, attr1, attr2, attr3, file_url
+  </sql>
+  <select id="selectByParams" resultMap="BaseResultMap" parameterType="com.zhejiang.manage.model.Criteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="common.Mysql_Pagination_Limit" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from information
+    where id = #{id}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from information
+    where id = #{id}
+  </delete>
+  <delete id="deleteByParams" parameterType="com.zhejiang.manage.model.Criteria" >
+    delete from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zhejiang.manage.model.Information" >
+    insert into information (id, title, company, conn_user, conn_phone, b_type, type, 
+      file_name, draft, draft_time, update_time, attr1, attr2, attr3, 
+      file_url)
+    values (#{id}, #{title}, #{company}, #{connUser}, #{connPhone}, #{bType}, #{type}, 
+      #{fileName}, #{draft}, #{draftTime}, #{updateTime}, #{attr1}, #{attr2}, #{attr3}, 
+      #{fileUrl})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhejiang.manage.model.Information" >
+    insert into information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="company != null" >
+        company,
+      </if>
+      <if test="connUser != null" >
+        conn_user,
+      </if>
+      <if test="connPhone != null" >
+        conn_phone,
+      </if>
+      <if test="bType != null" >
+        b_type,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="fileName != null" >
+        file_name,
+      </if>
+      <if test="draft != null" >
+        draft,
+      </if>
+      <if test="draftTime != null" >
+        draft_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="attr1 != null" >
+        attr1,
+      </if>
+      <if test="attr2 != null" >
+        attr2,
+      </if>
+      <if test="attr3 != null" >
+        attr3,
+      </if>
+      <if test="fileUrl != null" >
+        file_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="title != null" >
+        #{title},
+      </if>
+      <if test="company != null" >
+        #{company},
+      </if>
+      <if test="connUser != null" >
+        #{connUser},
+      </if>
+      <if test="connPhone != null" >
+        #{connPhone},
+      </if>
+      <if test="bType != null" >
+        #{bType},
+      </if>
+      <if test="type != null" >
+        #{type},
+      </if>
+      <if test="fileName != null" >
+        #{fileName},
+      </if>
+      <if test="draft != null" >
+        #{draft},
+      </if>
+      <if test="draftTime != null" >
+        #{draftTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="attr1 != null" >
+        #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        #{attr3},
+      </if>
+      <if test="fileUrl != null" >
+        #{fileUrl},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByParams" parameterType="com.zhejiang.manage.model.Criteria" resultType="java.lang.Integer" >
+    select count(*) from information
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByParamsSelective" parameterType="map" >
+    update information
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id},
+      </if>
+      <if test="record.title != null" >
+        title = #{record.title},
+      </if>
+      <if test="record.company != null" >
+        company = #{record.company},
+      </if>
+      <if test="record.connUser != null" >
+        conn_user = #{record.connUser},
+      </if>
+      <if test="record.connPhone != null" >
+        conn_phone = #{record.connPhone},
+      </if>
+      <if test="record.bType != null" >
+        b_type = #{record.bType},
+      </if>
+      <if test="record.type != null" >
+        type = #{record.type},
+      </if>
+      <if test="record.fileName != null" >
+        file_name = #{record.fileName},
+      </if>
+      <if test="record.draft != null" >
+        draft = #{record.draft},
+      </if>
+      <if test="record.draftTime != null" >
+        draft_time = #{record.draftTime},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime},
+      </if>
+      <if test="record.attr1 != null" >
+        attr1 = #{record.attr1},
+      </if>
+      <if test="record.attr2 != null" >
+        attr2 = #{record.attr2},
+      </if>
+      <if test="record.attr3 != null" >
+        attr3 = #{record.attr3},
+      </if>
+      <if test="record.fileUrl != null" >
+        file_url = #{record.fileUrl},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByParams" parameterType="map" >
+    update information
+    set id = #{record.id},
+      title = #{record.title},
+      company = #{record.company},
+      conn_user = #{record.connUser},
+      conn_phone = #{record.connPhone},
+      b_type = #{record.bType},
+      type = #{record.type},
+      file_name = #{record.fileName},
+      draft = #{record.draft},
+      draft_time = #{record.draftTime},
+      update_time = #{record.updateTime},
+      attr1 = #{record.attr1},
+      attr2 = #{record.attr2},
+      attr3 = #{record.attr3},
+      file_url = #{record.fileUrl}
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhejiang.manage.model.Information" >
+    update information
+    <set >
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="company != null" >
+        company = #{company},
+      </if>
+      <if test="connUser != null" >
+        conn_user = #{connUser},
+      </if>
+      <if test="connPhone != null" >
+        conn_phone = #{connPhone},
+      </if>
+      <if test="bType != null" >
+        b_type = #{bType},
+      </if>
+      <if test="type != null" >
+        type = #{type},
+      </if>
+      <if test="fileName != null" >
+        file_name = #{fileName},
+      </if>
+      <if test="draft != null" >
+        draft = #{draft},
+      </if>
+      <if test="draftTime != null" >
+        draft_time = #{draftTime},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="attr1 != null" >
+        attr1 = #{attr1},
+      </if>
+      <if test="attr2 != null" >
+        attr2 = #{attr2},
+      </if>
+      <if test="attr3 != null" >
+        attr3 = #{attr3},
+      </if>
+      <if test="fileUrl != null" >
+        file_url = #{fileUrl},
+      </if>
+    </set>
+    where id = #{id}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhejiang.manage.model.Information" >
+    update information
+    set title = #{title},
+      company = #{company},
+      conn_user = #{connUser},
+      conn_phone = #{connPhone},
+      b_type = #{bType},
+      type = #{type},
+      file_name = #{fileName},
+      draft = #{draft},
+      draft_time = #{draftTime},
+      update_time = #{updateTime},
+      attr1 = #{attr1},
+      attr2 = #{attr2},
+      attr3 = #{attr3},
+      file_url = #{fileUrl}
+    where id = #{id}
+  </update>
+</mapper>
