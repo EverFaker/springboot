@@ -7,11 +7,14 @@ import com.zhejiang.manage.service.InformationService;
 import com.zhejiang.manage.util.DateUtils;
 import com.zhejiang.manage.util.ExportExcelUtil;
 import com.zhejiang.manage.util.ExportExcelWrapper;
+import com.zhejiang.manage.util.FileUtil;
 import com.zhejiang.manage.util.ResultVo;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -111,6 +114,22 @@ public class InfoController {
         information.setUpdateTime(new Date());
         int i = informationService.insertSelective(information);
         resultVo.setMsg("操作成功");
+        return resultVo;
+    }
+
+    @DeleteMapping("/{id}")
+    public ResultVo deleteInfo(@PathVariable Integer id){
+        ResultVo resultVo = new ResultVo(true);
+        if (id == null){
+            resultVo.setMsg("操作错误，请重新操作");
+            resultVo.setStatus(false);
+        }else {
+            Information information = informationService.selectByPrimaryKey(id);
+            FileUtil.deleteFile(information.getFileUrl());
+            informationService.deleteByPrimaryKey(id);
+            resultVo.setMsg("操作成功");
+        }
+
         return resultVo;
     }
 }

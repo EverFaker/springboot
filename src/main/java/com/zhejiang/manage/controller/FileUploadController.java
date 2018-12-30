@@ -17,6 +17,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Date;
 
 /**
@@ -35,7 +37,8 @@ public class FileUploadController {
         ResultVo resultVo = new ResultVo(true);
         String fileName = file.getOriginalFilename();
 
-        String filePath = System.getProperty("user.dir")+"/files";
+        String path = System.getProperty("user.dir")+"/files";
+        String filePath = path.replaceAll("\\\\","/");
 
         if ("经验做法".equals(type)){
             filePath = filePath+"/jingyanzuofa";
@@ -65,12 +68,15 @@ public class FileUploadController {
     }
 
     @GetMapping("/download")
-    public void download(String url, HttpServletResponse response){
+    public void download(String url, HttpServletResponse response) throws UnsupportedEncodingException {
         if (!StringUtils.isEmpty(url)){
-            File file = new File(url);
             String name =  url.substring(url.lastIndexOf("/")+1);
             String name1 = name.substring(name.indexOf("-")+1);
-
+            File file = new File(url);
+            System.out.println(file.exists());
+            // 设置文件编码
+            name1 = URLEncoder.encode(name1,"UTF-8");
+            response.setCharacterEncoding("UTF-8");
             if (file.exists()){
                 response.setContentType("application/force-download");
                 response.setHeader("Content-Disposition", "attachment;fileName=" + name1);

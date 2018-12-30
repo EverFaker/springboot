@@ -51,6 +51,7 @@ public class UserController {
                 List<User> users = userService.selectByParams(new Criteria() {{
                     put("username", user.getUsername());
                     put("password", user.getPassword());
+                    put("attr2", "1");
                 }});
                 if (!CollectionUtils.isEmpty(users)) {
                     request.getSession().setAttribute("user", users.get(0));
@@ -92,6 +93,7 @@ public class UserController {
                 List<User> users = userService.selectByParams(new Criteria() {{
                     put("username", user.getUsername());
                     put("password", user.getPassword());
+                    put("attr2", "1");
                 }});
                 if (!CollectionUtils.isEmpty(users)) {
                     user.setPassword(user.getNewPassword());
@@ -134,6 +136,7 @@ public class UserController {
 
         resultVo.setData(userService.selectByParams(new Criteria() {{
             put("attr1", company);
+            put("attr2", "2");
         }}));
         return resultVo;
     }
@@ -154,6 +157,7 @@ public class UserController {
         criteria.setMysqlLength(mysqlLength);
         criteria.setMysqlOffset(mysqlOffset);
         criteria.setOrderByClause("last_login desc");
+        criteria.put("attr2","1");
         if (StringUtils.isNotBlank(username)){
             criteria.put("uname","%"+username+"%");
         }
@@ -189,6 +193,7 @@ public class UserController {
             }else {
                 Criteria criteria = new Criteria();
                 criteria.put("username",user.getUsername());
+                criteria.put("attr2","1");
                 List<User> users = userService.selectByParams(criteria);
                 if (!CollectionUtils.isEmpty(users)){
                     resultVo.setStatus(false);
@@ -196,8 +201,43 @@ public class UserController {
                 }else {
                     user.setPassword("123456");
                     user.setLastLogin(new Date());
+                    user.setAttr2("1");
                     userService.insertSelective(user);
                     resultVo.setMsg("新增用户成功");
+                }
+            }
+        }
+        return resultVo;
+    }
+
+    /**
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping("/add")
+    public ResultVo createUser1(@RequestBody User user){
+        ResultVo resultVo = new ResultVo(true);
+        if (Objects.isNull(user)){
+            resultVo.setStatus(false);
+            resultVo.setMsg("请填写用户信息");
+        }else {
+            if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPhone())){
+                resultVo.setStatus(false);
+                resultVo.setMsg("请填写完整的用户信息");
+            }else {
+                Criteria criteria = new Criteria();
+                criteria.put("username",user.getUsername());
+                criteria.put("attr2","2");
+                criteria.put("attr1",user.getAttr1());
+                List<User> users = userService.selectByParams(criteria);
+                if (!CollectionUtils.isEmpty(users)){
+                    resultVo.setStatus(false);
+                    resultVo.setMsg("联系人已存在");
+                }else {
+                    user.setAttr2("2");
+                    userService.insertSelective(user);
+                    resultVo.setMsg("新增联系人成功");
                 }
             }
         }
@@ -219,4 +259,6 @@ public class UserController {
         }
         return resultVo;
     }
+
+
 }

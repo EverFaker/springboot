@@ -4,8 +4,8 @@ server:
 spring:
   datasource:
     driver-class-name: org.sqlite.JDBC
-    #url: jdbc:sqlite:/Users/durantjiang/software/sqlite/info.db
-    url: jdbc:sqlite:/root/sqlite/info.db
+    url: jdbc:sqlite:/Users/durantjiang/software/sqlite/info.db
+    #url: jdbc:sqlite:D:/info.db
     username:
     password:
 
